@@ -10,14 +10,17 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
 public class login {
+
+
     public static WindowsDriver<RemoteWebElement> driver;
 
-    public static WindowsDriver<RemoteWebElement> initializeDriver() throws MalformedURLException {
+    public static WindowsDriver<RemoteWebElement> initializeDriver() throws IOException {
+        startWinAppDriver();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("app", "C:\\storeMate\\Framework\\BinUI\\FrameworkUI.exe");
         capabilities.setCapability("deviceName", "WindowsPC");
@@ -49,6 +52,10 @@ public class login {
         Assert.assertTrue(driver.findElementByXPath("/Pane[@ClassName=\"#32769\"][@Name=\"Desktop 1\"]/Window[@Name=\"storeMate\"][@AutomationId=\"UIFrameworkForm\"]/Pane[@AutomationId=\"taskPane\"]/Pane[@AutomationId=\"workSpace\"]/Pane[@AutomationId=\"MenuForm\"]").isDisplayed());
 //
 
+    }
+
+    public static void startWinAppDriver() throws IOException {
+        Runtime.getRuntime().exec("C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe");
     }
 
 
