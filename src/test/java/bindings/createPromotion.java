@@ -4,15 +4,15 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.appium.java_client.windows.WindowsDriver;
 import org.junit.Assert;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.util.List;
 
 public class createPromotion {
     WindowsDriver<RemoteWebElement> driver = login.initializeDriver();
 
-    public createPromotion() throws MalformedURLException {
+    public createPromotion() throws IOException {
     }
 
 
@@ -45,22 +45,55 @@ public class createPromotion {
     @Then("^with type ([^\"]*)$")
     public void with_type(String arg1) {
 
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        String handle = driver.getWindowHandle();
+        List<RemoteWebElement> windows = driver.findElementsByTagName("Window");
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("appTopLevelWindow", handle);
+        int i=0;
 
-        Assert.assertTrue(driver.findElementByName("Select promotion type").isDisplayed());
+        System.out.println("number of windows: " + windows.size());
+        for (RemoteWebElement window:windows){
+            System.out.println("Name window " + i + " " +  window.getAttribute("Name"));
+            System.out.println("Handle window " + i + " " + window.getAttribute("NativeWindowHandle"));
+        }
+
+        int intValueHandle = Integer.parseInt(windows.get(1).getAttribute("NativeWindowHandle"));
+        String hexValueHandle = Integer.toHexString(intValueHandle);
+        System.out.println("hexValueHandle" + hexValueHandle);
+
+        driver.switchTo().window(hexValueHandle);
 
 
-//        RemoteWebElement popupWindow =driver.findElementById("PromotionTypeSelectionForm");
+
+//        System.out.println("Initial windowHandle: " + driver.getWindowHandle());
+//
+//        Set<String> windowHandles = driver.getWindowHandles();
+//
+//
+//        for (String handle:windowHandles){
+//            System.out.println(handle);
+//        }
+//
+//        driver.switchTo().activeElement();
+//        System.out.println("Final windowHandle: " + driver.getWindowHandle());
+//
+//        List<RemoteWebElement> popupWindow = driver.findElementsByClassName("WindowsForms10.Window.8.app.0.3933f29_r28_ad3");
+//
+//        for(RemoteWebElement element: popupWindow){
+//            System.out.println(element.getAttribute("Name"));
+//        }
+//        System.out.println(popupWindow);
 //        String popupWindowHandle = popupWindow.getAttribute("NativeWindowHandle");
 //        int popupWindowHandleInt = Integer.parseInt(popupWindowHandle);
 //        String popupWindowHandleHex = Integer.toHexString(popupWindowHandleInt);
+//        System.out.println("Attribute: " + popupWindowHandle + ", int:" + popupWindowHandleInt + "String: " + popupWindowHandleHex);
 //
 //        DesiredCapabilities appCapabilities = new DesiredCapabilities();
-//        appCapabilities.setCapability("appTopLevelWindow",popupWindowHandleHex);
+//        appCapabilities.setCapability("appTopLevelWindow",popupWindowHandle);
 
 
 

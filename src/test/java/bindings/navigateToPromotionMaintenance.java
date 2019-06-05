@@ -9,13 +9,14 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
+
 
 public class navigateToPromotionMaintenance {
     WindowsDriver<RemoteWebElement> driver = login.initializeDriver();
     WebDriverWait wait = new WebDriverWait(driver, 120);
 
-    public navigateToPromotionMaintenance() throws MalformedURLException {
+    public navigateToPromotionMaintenance() throws IOException {
     }
 
 

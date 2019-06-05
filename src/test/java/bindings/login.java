@@ -20,18 +20,18 @@ public class login {
     public static WindowsDriver<RemoteWebElement> driver;
 
     public static WindowsDriver<RemoteWebElement> initializeDriver() throws IOException {
-        startWinAppDriver();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("app", "C:\\storeMate\\Framework\\BinUI\\FrameworkUI.exe");
-        capabilities.setCapability("deviceName", "WindowsPC");
-        driver = new WindowsDriver(new URL("http://localhost:4723"), capabilities);
+        capabilities.setCapability("platformName ", "Windows");
+        capabilities.setCapability("deviceName  ", "WindowsPC");
+                driver = new WindowsDriver(new URL("http://localhost:4723"), capabilities);
         return driver;
     }
 
     @Given("I enter the username and password")
     public void i_enter_the_username_and_password(List<List<String>> arg1) throws Throwable {
+        startWinAppDriver();
         initializeDriver();
-
 
         WebDriverWait wait = new WebDriverWait(driver, 240);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/Pane[@ClassName=\"#32769\"][@Name=\"Desktop 1\"]/Window[@Name=\"storeMate\"][@AutomationId=\"UIFrameworkForm\"]/Pane[@AutomationId=\"taskPane\"]/Pane[@AutomationId=\"workSpace\"]/Window[@AutomationId=\"LogonForm\"]/Pane[starts-with(@AutomationId,\"panel\")]/Pane[@Name=\"Log on.\"][@AutomationId=\"logonPrompt\"]")));
@@ -54,8 +54,12 @@ public class login {
 
     }
 
-    public static void startWinAppDriver() throws IOException {
-        Runtime.getRuntime().exec("C:\\Program Files (x86)\\Windows Application Driver\\WinAppDriver.exe");
+    public static void startWinAppDriver() {
+        try {
+            Runtime.getRuntime().exec("cmd.exe /c cd \"C:\\Program Files (x86)\\Windows Application Driver\" & start WinAppDriver.exe");
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 
